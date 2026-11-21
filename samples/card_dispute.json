@@ -1,0 +1,38 @@
+{
+  "name": "Card Dispute Handling",
+  "owner": "Head of Card Operations",
+  "objective": "Customers get a fair, fast decision on disputed card transactions",
+  "stages": [
+    {
+      "name": "Intake",
+      "goal": "Every dispute is complete and correctly classified",
+      "steps": [
+        {"name": "Capture dispute details", "actor": "Customer", "kind": "manual",
+         "systems": ["Mobile app"], "rules": ["Raised within 120 days of posting"], "target_time": "same day"},
+        {"name": "Classify fraud or dispute", "actor": "", "kind": "decision",
+         "rules": ["Unauthorised transaction goes to Fraud Investigation"], "target_time": "1 business day"},
+        {"name": "Send acknowledgement", "actor": "", "kind": "automated", "systems": ["Notification service"]}
+      ]
+    },
+    {
+      "name": "Investigation",
+      "goal": "The analyst has the evidence needed to decide",
+      "steps": [
+        {"name": "Fetch transaction and merchant data", "actor": "", "kind": "integration",
+         "systems": ["Card core system", "Card scheme API"]},
+        {"name": "Decide on provisional credit", "actor": "Dispute analyst", "kind": "approval",
+         "rules": ["Up to EUR 2,500 without team-lead approval", "No credit for accounts under 30 days old"],
+         "target_time": "10 business days"}
+      ]
+    },
+    {
+      "name": "Resolution",
+      "goal": "",
+      "steps": [
+        {"name": "Submit chargeback", "actor": "Dispute analyst", "kind": "integration", "systems": [],
+         "target_time": "5 business days"},
+        {"name": "Close case and inform customer", "actor": "Dispute analyst", "kind": "manual"}
+      ]
+    }
+  ]
+}
